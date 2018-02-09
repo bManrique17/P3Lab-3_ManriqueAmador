@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 using namespace std;
 
@@ -13,6 +14,10 @@ void liberarMemoria(int**&);
 void imprimirMatriz(int**);
 int parsearNumero(char);
 bool validarFecha(string);
+string dia(int);
+string mesCadena(int);
+
+vector <string> fechas;
 
 int main(){
 	cout<<"**LAB_3 Manrique Amador**"<<endl;
@@ -20,6 +25,7 @@ int main(){
 	do{
 		switch(menu()){
 			case 1:{
+			       cout<<"No existe, perdon"<<endl;
 		       	}
 		       	break;
 			case 2:{
@@ -156,16 +162,103 @@ void liberarMemoria(int**& matrix){
 }
 
 void ejercicio3(){
-	vector <string> fechas;
 	cout<<"**Ejercicio 3"<<endl;
 	cout<<"->Ingrese su fecha: ";
 	string fecha;
 	cin>>fecha;
+	int imes,idia,iano;
+        string mes,dia,ano;
+        ano = fecha.substr(0,4);
+        mes = fecha.substr(4,6);
+        dia = fecha.substr(6,7);
+	iano = parsearNumero(ano[0])*1000 + parsearNumero(ano[1])*100 + parsearNumero(ano[2])*10 + parsearNumero(ano[3]);
+        imes = parsearNumero(mes[0])*10 + parsearNumero(mes[1]);
+        idia = parsearNumero(dia[0])*10 + parsearNumero(dia[1]);
 	if(validarFecha(fecha)){
-		cout<<"drogas";
+		stringstream ss;
+		string temp;
+		ss << dia << " de ";
+		ss <<mesCadena(imes);
+		ss <<" del "<<ano;
+		temp = ss.str();	
+		cout<<temp<<endl;
+		cout<<endl;
+		cout<<"(1)Listar todo"<<endl;
+		cout<<"(2)Listar ordenado"<<endl;
+		cout<<"(3)Salir"<<endl;
+		cout<<"->Ingrese su opcion: ";
+		int resp;
+		cin>>resp;
+		fechas.push_back(temp);
+		switch(resp){
+			case 1:{
+				cout<<endl;
+				for(int i=0 ; i<fechas.size() ; i++){
+					cout<<fechas[i]<<endl;
+				}	
+				cout<<endl;	
+			       }
+			break;
+			case 2:{
+				cout<<"No existe, perdon"<<endl;
+			       }
+			break;
+			default:
+			break;
+		}
 	}else{
 		cout<<"Fecha incorrecta"<<endl;
 	}
+}
+
+string mesCadena(int m){
+        switch(m){
+		case 1:
+	                return "Enero";
+	        case 2:
+	                return "Febrero";
+	        case 3:
+	                return "Marzo";
+	        case 4:
+	                return "Abril";
+                case 5:
+                        return "Mayo";
+                case 6:
+                        return "Junio";
+                case 7:
+                        return "Julio";
+                case 8:
+                        return "Agosto";
+		case 9:
+			return "Septiembre";
+		case 10:
+			return "Octubre";
+		case 11:
+			return "Noviembre";
+		case 12:
+			return "Diciembre";
+	}
+	return "as";
+}
+
+string dia (int d){
+	switch(d){
+		case 1:
+			return "Lunes";
+		case 2:
+			return "Martes";
+		case 3:
+			return "Miercoles";
+		case 4:
+			return "Jueves";
+		case 5:
+			return "Viernes";
+		case 6:
+			return "Sabado";
+		case 7:
+			return "Domingo";
+	}
+	return "";
 }
 
 bool validarFecha(string fecha){
@@ -191,9 +284,10 @@ bool validarFecha(string fecha){
 
 	if(iano%4 != 0 && idia==29)
 		return false;
-	return 0;		
+	
 }
 
 
 
+		
 
